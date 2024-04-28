@@ -14,6 +14,8 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as ApiDataIndexImport } from './routes/api-data/index'
+import { Route as GlobalStatePath2Import } from './routes/global-state/path2'
+import { Route as GlobalStatePath1Import } from './routes/global-state/path1'
 import { Route as ApiDataItemIdImport } from './routes/api-data/$itemId'
 
 // Create Virtual Routes
@@ -38,6 +40,16 @@ const ApiDataIndexRoute = ApiDataIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const GlobalStatePath2Route = GlobalStatePath2Import.update({
+  path: '/global-state/path2',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const GlobalStatePath1Route = GlobalStatePath1Import.update({
+  path: '/global-state/path1',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const ApiDataItemIdRoute = ApiDataItemIdImport.update({
   path: '/api-data/$itemId',
   getParentRoute: () => rootRoute,
@@ -59,6 +71,14 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiDataItemIdImport
       parentRoute: typeof rootRoute
     }
+    '/global-state/path1': {
+      preLoaderRoute: typeof GlobalStatePath1Import
+      parentRoute: typeof rootRoute
+    }
+    '/global-state/path2': {
+      preLoaderRoute: typeof GlobalStatePath2Import
+      parentRoute: typeof rootRoute
+    }
     '/api-data/': {
       preLoaderRoute: typeof ApiDataIndexImport
       parentRoute: typeof rootRoute
@@ -72,6 +92,8 @@ export const routeTree = rootRoute.addChildren([
   IndexLazyRoute,
   FormLazyRoute,
   ApiDataItemIdRoute,
+  GlobalStatePath1Route,
+  GlobalStatePath2Route,
   ApiDataIndexRoute,
 ])
 

@@ -26,6 +26,16 @@ export function NavMenu() {
                         <NavigationMenuLink className={navigationMenuTriggerStyle()}>Form</NavigationMenuLink>
                     </Link>
                 </NavigationMenuItem>
+                <NavigationMenuItem>
+                    <Link to={'/global-state/path1'} className="[&.active]:font-bold">
+                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>Global Demo Path 1</NavigationMenuLink>
+                    </Link>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                    <Link to={'/global-state/path2'} className="[&.active]:font-bold">
+                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>Global Demo Path 2</NavigationMenuLink>
+                    </Link>
+                </NavigationMenuItem>
             </NavigationMenuList>
         </NavigationMenu>
     );
