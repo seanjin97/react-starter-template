@@ -4,7 +4,7 @@ import type {} from '@redux-devtools/extension'; // required for devtools typing
 
 interface BearState {
     numBears: number;
-    increaseBears: (by: number) => void;
+    increaseBears: () => void;
 }
 
 export const useBearStore = create<BearState>()(

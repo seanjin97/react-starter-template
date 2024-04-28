@@ -7,7 +7,7 @@ export const Route = createFileRoute('/global-state/path2')({
 });
 
 function GlobalStatePath2() {
-    const increaseBears = useBearStore((state) => state.increaseBears);
+    const increaseBears = useBearStore((state) => state.increaseBears) as () => void;
 
     return (
         <>
