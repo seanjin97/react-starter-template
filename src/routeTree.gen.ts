@@ -18,9 +18,15 @@ import { Route as ApiDataItemIdImport } from './routes/api-data/$itemId'
 
 // Create Virtual Routes
 
+const FormLazyImport = createFileRoute('/form')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
+
+const FormLazyRoute = FormLazyImport.update({
+  path: '/form',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/form.lazy').then((d) => d.Route))
 
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
@@ -45,6 +51,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/form': {
+      preLoaderRoute: typeof FormLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/api-data/$itemId': {
       preLoaderRoute: typeof ApiDataItemIdImport
       parentRoute: typeof rootRoute
@@ -60,6 +70,7 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren([
   IndexLazyRoute,
+  FormLazyRoute,
   ApiDataItemIdRoute,
   ApiDataIndexRoute,
 ])

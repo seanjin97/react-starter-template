@@ -21,6 +21,11 @@ export function NavMenu() {
                         <NavigationMenuLink className={navigationMenuTriggerStyle()}>Data</NavigationMenuLink>
                     </Link>
                 </NavigationMenuItem>
+                <NavigationMenuItem>
+                    <Link to={'/form'} className="[&.active]:font-bold">
+                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>Form</NavigationMenuLink>
+                    </Link>
+                </NavigationMenuItem>
             </NavigationMenuList>
         </NavigationMenu>
     );
