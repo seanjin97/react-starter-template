@@ -1,15 +1,24 @@
 import { getShopItems } from '@/api';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { queryClient } from '@/main';
+import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
+
+const shopItemsQueryOptions = () =>
+    queryOptions({
+        queryKey: ['shopItems'],
+        queryFn: getShopItems,
+    });
 
 export const Route = createFileRoute('/api-data/')({
     component: ApiData,
-    loader: getShopItems,
+    loader: () => queryClient.ensureQueryData(shopItemsQueryOptions()),
 });
 
 function ApiData() {
-    const items = Route.useLoaderData();
+    const shopItemsQuery = useSuspenseQuery(shopItemsQueryOptions());
+    const shopItems = shopItemsQuery.data;
 
     const navigate = useNavigate({ from: Route.path });
 
@@ -17,11 +26,12 @@ function ApiData() {
         <>
             <h1 className="font-bold text-2xl mb-4 underline">Shop Items</h1>
             <div className="md:grid md:grid-cols-3 lg:grid-cols-5 gap-4">
-                {items.map((item) => {
+                {shopItems?.map((item) => {
                     return (
                         <Card
                             key={item.id}
                             className="mb-4 cursor-pointer hover:bg-gray-100 max-h-96 overflow-y-auto"
+                            // eslint-disable-next-line @typescript-eslint/no-misused-promises
                             onClick={() =>
                                 navigate({
                                     to: `/api-data/${item.id}`,

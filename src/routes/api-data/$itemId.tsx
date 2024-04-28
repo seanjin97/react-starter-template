@@ -1,10 +1,18 @@
 import { getShopItemById } from '@/api';
 import { Badge } from '@/components/ui/badge';
+import { queryClient } from '@/main';
+import { queryOptions } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
+
+const shopItemQueryOptions = (shopItemId: string) =>
+    queryOptions({
+        queryKey: ['shopItemId', shopItemId],
+        queryFn: () => getShopItemById(shopItemId),
+    });
 
 export const Route = createFileRoute('/api-data/$itemId')({
     component: ShopItemId,
-    loader: ({ params: { itemId } }) => getShopItemById(itemId as string),
+    loader: ({ params: { itemId } }: { params: { itemId: string } }) => queryClient.ensureQueryData(shopItemQueryOptions(itemId)),
 });
 
 function ShopItemId() {
